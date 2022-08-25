@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 import "./PokemonList.css";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import StarButton from "./StarButton";
+import { setFavorite } from "../slices/dataSlice";
 
-const PokemonCard = ({ name, imgUrl, types }) => {
-  const [favorite, setFavorite] = useState(false);
+const PokemonCard = ({ name, imgUrl, types, id, favorite }) => {
+  const dispatch = useDispatch();
+  const handleOnClick = () => {
+    dispatch(setFavorite({ pokemonId: id }));
+  };
+
   return (
     <Card
       title={name.replace(name[0], name[0].toUpperCase())}
@@ -13,7 +19,7 @@ const PokemonCard = ({ name, imgUrl, types }) => {
       extra={
         <StarButton
           isFavorite={favorite}
-          onClick={() => setFavorite(!favorite)}
+          onClick={handleOnClick}
         />
       }
     >
